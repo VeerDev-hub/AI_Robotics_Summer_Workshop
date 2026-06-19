@@ -2,14 +2,6 @@ import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-/**
- * db.js – MongoDB connection and enquiry model
- *
- * Uses mongoose when MONGODB_URI is set.
- * Falls back to an in-memory store so the server still runs
- * without a database configured.
- */
-
 let mongoose = null
 let EnquiryModel = null
 let NewsletterModel = null
@@ -18,11 +10,6 @@ let NewsletterModel = null
 const memoryStore = []
 const newsletterMemoryStore = []
 
-/**
- * Manually parse and load .env file if process.env.MONGODB_URI is not set.
- * This handles cases where the server is run directly with node src/server.js
- * without passing the --env-file flag.
- */
 function loadEnv() {
   if (process.env.MONGODB_URI) return
 
@@ -66,11 +53,7 @@ function loadEnv() {
   }
 }
 
-/**
- * Attempt to load mongoose and connect to MongoDB.
- * Silently continues without DB if the URI is missing or
- * the connection fails (keeps the API functional regardless).
- */
+
 export async function connectDB() {
   loadEnv()
   const uri = process.env.MONGODB_URI
@@ -98,11 +81,11 @@ export async function connectDB() {
     // Define Enquiry Schema & Model
     const enquirySchema = new mongoose.Schema(
       {
-        name:         { type: String, required: true, trim: true },
-        email:        { type: String, required: true, trim: true, lowercase: true },
-        phone:        { type: String, required: true, trim: true },
+        name: { type: String, required: true, trim: true },
+        email: { type: String, required: true, trim: true, lowercase: true },
+        phone: { type: String, required: true, trim: true },
         discountCode: { type: String, trim: true },
-        createdAt:    { type: Date,   default: Date.now },
+        createdAt: { type: Date, default: Date.now },
       },
       { collection: 'Registered' }
     )
@@ -112,11 +95,11 @@ export async function connectDB() {
     // Define Newsletter Schema & Model
     const newsletterSchema = new mongoose.Schema(
       {
-        email:       { type: String, required: true, unique: true, trim: true, lowercase: true },
-        name:        { type: String, required: true, trim: true },
-        city:        { type: String, trim: true },
+        email: { type: String, required: true, unique: true, trim: true, lowercase: true },
+        name: { type: String, required: true, trim: true },
+        city: { type: String, trim: true },
         childrenAge: { type: String, trim: true },
-        createdAt:   { type: Date,   default: Date.now }
+        createdAt: { type: Date, default: Date.now }
       },
       { collection: 'NewsletterSubscribers' }
     )
@@ -132,7 +115,7 @@ export async function connectDB() {
   }
 }
 
-/* ─────────────── Enquiry Database Operations ─────────────── */
+
 
 export async function saveEnquiry(data) {
   if (EnquiryModel) {
@@ -152,9 +135,8 @@ export function getMemoryStore() {
   return [...memoryStore]
 }
 
-/* ─────────────── Newsletter Database Operations ─────────────── */
 
-/** Subscribe to the newsletter */
+
 export async function subscribeNewsletter({ email, name, city, childrenAge }) {
   const cleanEmail = email.trim().toLowerCase()
 
