@@ -3,42 +3,13 @@ import { useState } from 'react'
 type NavbarProps = {
   isDark: boolean
   onToggleTheme: () => void
-  user: { username: string; email: string } | null
-  onLogout: () => void
-  setView: (view: 'home' | 'login' | 'signup') => void
-  currentView: 'home' | 'login' | 'signup'
 }
 
-export function Navbar({
-  isDark,
-  onToggleTheme,
-  user,
-  onLogout,
-  setView,
-  currentView,
-}: NavbarProps) {
+export function Navbar({ isDark, onToggleTheme }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  function handleLogoClick(e: React.MouseEvent) {
-    e.preventDefault()
-    setView('home')
+  function handleLinkClick() {
     setIsMenuOpen(false)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
-  function handleLinkClick(href: string, e: React.MouseEvent) {
-    setIsMenuOpen(false)
-    if (currentView !== 'home') {
-      e.preventDefault()
-      setView('home')
-      // Wait for view to switch back to home before scrolling to element
-      setTimeout(() => {
-        const target = document.querySelector(href)
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth' })
-        }
-      }, 100)
-    }
   }
 
   const navLinks = [
@@ -51,7 +22,7 @@ export function Navbar({
   return (
     <header className="navbar-playful" style={{ position: 'relative' }}>
       {/* Logo */}
-      <a href="/" onClick={handleLogoClick} className="nav-logo-playful" aria-label="Kidrove home">
+      <a href="/" className="nav-logo-playful" aria-label="Kidrove home">
         <div className="nav-logo-icon">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ffffff" strokeWidth="3">
             <polygon points="12 2 2 22 12 17 22 22 12 2" />
@@ -61,13 +32,12 @@ export function Navbar({
         <span style={{ color: 'var(--clr-brand)', fontWeight: 900 }}>rove</span>
       </a>
 
-      {/* Desktop Links (Hidden on mobile via css rules) */}
+      {/* Desktop Links (Hidden on mobile via .desktop-nav style) */}
       <nav className="desktop-nav">
         {navLinks.map((link) => (
           <a
             key={link.label}
             href={link.href}
-            onClick={(e) => handleLinkClick(link.href, e)}
             className="nav-link-playful"
           >
             {link.label}
@@ -75,18 +45,18 @@ export function Navbar({
         ))}
       </nav>
 
-      {/* Right Controls: theme toggle, auth states, enroll button, hamburger */}
+      {/* Right Controls: theme toggle, enroll button, hamburger toggle */}
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '0.6rem',
+          gap: '0.50rem',
         }}
       >
         {/* Theme Toggle */}
         <button
           onClick={onToggleTheme}
-          className="theme-toggle-btn cursor-pointer"
+          className="theme-toggle-btn"
           aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
         >
           {isDark ? (
@@ -108,78 +78,25 @@ export function Navbar({
           )}
         </button>
 
-        {/* Authentication Options (Desktop only) */}
-        <div className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-          {user ? (
-            <>
-              {/* User greeting and logout */}
-              <div 
-                className="px-3.5 py-1.5 rounded-full border-2 border-slate-900 bg-amber-50 dark:bg-amber-950/20 text-xs font-black text-slate-800"
-                style={{ color: 'var(--clr-ink)' }}
-              >
-                🤖 {user.username}
-              </div>
-              <button
-                onClick={onLogout}
-                className="btn-playful btn-playful-white"
-                style={{
-                  padding: '0.4rem 0.8rem',
-                  fontSize: '0.75rem',
-                  borderWidth: '2.5px',
-                  boxShadow: '2.5px 2.5px 0 0 var(--clr-border)',
-                  textTransform: 'uppercase',
-                }}
-              >
-                Log Out
-              </button>
-            </>
-          ) : (
-            <>
-              <button
-                onClick={() => setView('login')}
-                className="nav-link-playful cursor-pointer"
-                style={{ fontSize: '0.8125rem', fontWeight: 900 }}
-              >
-                Log In
-              </button>
-              <button
-                onClick={() => setView('signup')}
-                className="btn-playful btn-playful-white cursor-pointer"
-                style={{
-                  padding: '0.4rem 0.8rem',
-                  fontSize: '0.75rem',
-                  borderWidth: '2.5px',
-                  boxShadow: '2.5px 2.5px 0 0 var(--clr-border)',
-                  textTransform: 'uppercase',
-                }}
-              >
-                Sign Up
-              </button>
-            </>
-          )}
-
-          {/* Enroll Button */}
-          {currentView === 'home' && (
-            <a
-              href="#registration"
-              className="btn-playful btn-playful-orange"
-              style={{
-                padding: '0.4rem 1rem',
-                fontSize: '0.8125rem',
-                borderWidth: '2.5px',
-                boxShadow: '2.5px 2.5px 0 0 var(--clr-border)',
-                textTransform: 'uppercase',
-              }}
-            >
-              Enroll Now
-            </a>
-          )}
-        </div>
+        {/* Enroll Button (Desktop only) */}
+        <a
+          href="#registration"
+          className="btn-playful btn-playful-orange desktop-nav"
+          style={{
+            padding: '0.4rem 1rem',
+            fontSize: '0.8125rem',
+            borderWidth: '2.5px',
+            boxShadow: '2.5px 2.5px 0 0 var(--clr-border)',
+            textTransform: 'uppercase',
+          }}
+        >
+          Enroll Now
+        </a>
 
         {/* Mobile Hamburger toggle button */}
         <button
           onClick={() => setIsMenuOpen((prev) => !prev)}
-          className="menu-toggle-btn cursor-pointer"
+          className="menu-toggle-btn"
           aria-label="Toggle navigation menu"
           aria-expanded={isMenuOpen}
         >
@@ -204,80 +121,29 @@ export function Navbar({
           <a
             key={link.label}
             href={link.href}
-            onClick={(e) => handleLinkClick(link.href, e)}
+            onClick={handleLinkClick}
             className="nav-link-playful"
             style={{ padding: '0.5rem 0', fontSize: '1.0625rem' }}
           >
             {link.label}
           </a>
         ))}
-
-        <div className="border-t-2 border-slate-200 dark:border-slate-800 my-4"></div>
-
-        {/* Auth details on mobile */}
-        {user ? (
-          <div className="space-y-3 w-full">
-            <div 
-              className="text-center font-black py-2 bg-amber-50 dark:bg-amber-950/20 rounded-lg border-2 border-slate-900 text-sm"
-              style={{ color: 'var(--clr-ink)' }}
-            >
-              🤖 Logged in as: {user.username}
-            </div>
-            <button
-              onClick={() => {
-                onLogout()
-                setIsMenuOpen(false)
-              }}
-              className="btn-playful btn-playful-white w-full py-2.5 text-sm uppercase font-black"
-              style={{ boxShadow: '2.5px 2.5px 0 0 var(--clr-border)' }}
-            >
-              Log Out
-            </button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 gap-3 w-full">
-            <button
-              onClick={() => {
-                setView('login')
-                setIsMenuOpen(false)
-              }}
-              className="btn-playful btn-playful-white py-2 text-sm uppercase font-black cursor-pointer"
-              style={{ boxShadow: '2.5px 2.5px 0 0 var(--clr-border)' }}
-            >
-              Log In
-            </button>
-            <button
-              onClick={() => {
-                setView('signup')
-                setIsMenuOpen(false)
-              }}
-              className="btn-playful btn-playful-orange py-2 text-sm uppercase font-black cursor-pointer"
-              style={{ boxShadow: '2.5px 2.5px 0 0 var(--clr-border)' }}
-            >
-              Sign Up
-            </button>
-          </div>
-        )}
-
-        {currentView === 'home' && (
-          <a
-            href="#registration"
-            onClick={() => setIsMenuOpen(false)}
-            className="btn-playful btn-playful-orange text-center"
-            style={{
-              marginTop: '0.75rem',
-              padding: '0.6rem',
-              fontSize: '0.9375rem',
-              borderWidth: '2.5px',
-              boxShadow: '2.5px 2.5px 0 0 var(--clr-border)',
-              textTransform: 'uppercase',
-              width: '100%',
-              display: 'block'
-            }}
-          >
-            Enroll Now
-          </a>
-        )}
+        <a
+          href="#registration"
+          onClick={handleLinkClick}
+          className="btn-playful btn-playful-orange"
+          style={{
+            marginTop: '0.5rem',
+            padding: '0.5rem',
+            fontSize: '0.9375rem',
+            borderWidth: '2.5px',
+            boxShadow: '2.5px 2.5px 0 0 var(--clr-border)',
+            textTransform: 'uppercase',
+            width: '100%',
+          }}
+        >
+          Enroll Now
+        </a>
       </div>
     </header>
   )
