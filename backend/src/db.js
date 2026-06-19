@@ -35,9 +35,10 @@ export async function connectDB() {
 
     await mongoose.connect(uri, {
       serverSelectionTimeoutMS: 5000,
+      dbName: 'InterestedUsers',
     })
 
-    console.log('✅ MongoDB connected successfully.')
+    console.log('✅ MongoDB connected successfully to InterestedUsers database.')
 
     // Define schema & model
     const enquirySchema = new mongoose.Schema(
@@ -48,12 +49,12 @@ export async function connectDB() {
         discountCode: { type: String, trim: true },
         createdAt:    { type: Date,   default: Date.now },
       },
-      { collection: 'enquiries' }
+      { collection: 'Registered' }
     )
 
     // Avoid re-registering model on hot reload
     EnquiryModel =
-      mongoose.models?.Enquiry ?? mongoose.model('Enquiry', enquirySchema)
+      mongoose.models?.Registered ?? mongoose.model('Registered', enquirySchema)
   } catch (err) {
     console.error('❌ MongoDB connection failed:', err.message)
     console.warn('   Falling back to in-memory store.')
