@@ -6,6 +6,8 @@ import type { EnquiryFormData, WorkshopInfo } from '../types/workshop'
 type RegistrationSectionProps = {
   workshop: WorkshopInfo
   discountCode?: string
+  prefillName?: string
+  prefillEmail?: string
 }
 
 type FormErrors = Partial<Record<keyof EnquiryFormData, string>>
@@ -96,7 +98,12 @@ function FormField({ id, label, error, children }: FieldProps) {
   )
 }
 
-export function RegistrationSection({ workshop, discountCode }: RegistrationSectionProps) {
+export function RegistrationSection({
+  workshop,
+  discountCode,
+  prefillName,
+  prefillEmail,
+}: RegistrationSectionProps) {
   const [form, setForm] = useState<EnquiryFormData>(initialForm)
   const [countryCode, setCountryCode] = useState('+91')
   const [errors, setErrors] = useState<FormErrors>({})
@@ -108,6 +115,18 @@ export function RegistrationSection({ workshop, discountCode }: RegistrationSect
       setForm((prev) => ({ ...prev, discountCode }))
     }
   }, [discountCode])
+
+  useEffect(() => {
+    if (prefillName) {
+      setForm((prev) => ({ ...prev, name: prefillName }))
+    }
+  }, [prefillName])
+
+  useEffect(() => {
+    if (prefillEmail) {
+      setForm((prev) => ({ ...prev, email: prefillEmail }))
+    }
+  }, [prefillEmail])
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target
