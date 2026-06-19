@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import kidroveLogo from '../assets/kidrove.svg'
 
 type NavbarProps = {
   isDark: boolean
@@ -23,18 +22,14 @@ export function Navbar({ isDark, onToggleTheme }: NavbarProps) {
   return (
     <header className="navbar-playful" style={{ position: 'relative' }}>
       {/* Logo */}
-      <a href="/" className="nav-logo-playful" aria-label="Kidrove home" style={{ gap: 0 }}>
-        <img
-          src={kidroveLogo}
-          alt="Kidrove"
-          style={{
-            height: '2.25rem',
-            width: 'auto',
-            display: 'block',
-            filter: isDark ? 'brightness(0) invert(1)' : 'none',
-            transition: 'filter 0.3s ease',
-          }}
-        />
+      <a href="/" className="nav-logo-playful" aria-label="Kidrove home">
+        <div className="nav-logo-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#ffffff" strokeWidth="3">
+            <polygon points="12 2 2 22 12 17 22 22 12 2" />
+          </svg>
+        </div>
+        <span style={{ color: 'var(--clr-ink)', fontWeight: 900 }}>kid</span>
+        <span style={{ color: 'var(--clr-brand)', fontWeight: 900 }}>rove</span>
       </a>
 
       {/* Desktop Links (Hidden on mobile via .desktop-nav style) */}
