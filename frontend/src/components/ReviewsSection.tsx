@@ -91,63 +91,84 @@ export function ReviewsSection() {
 
   return (
     <section 
-      className="section-padding-playful relative overflow-hidden" 
+      className="section-padding-playful relative" 
       style={{ 
         backgroundColor: '#fbfbfb',
         borderTop: '3px solid var(--clr-border)',
-        borderBottom: '3px solid var(--clr-border)'
+        borderBottom: '3px solid var(--clr-border)',
+        overflow: 'hidden'
       }}
     >
-      {/* Decorative Whimsical Elements */}
-      {/* Left side abstract blobs / flower */}
+      {/* Decorative background vectors */}
       <div 
-        className="absolute left-[-50px] bottom-[-20px] w-48 h-48 opacity-10 pointer-events-none hidden md:block"
         style={{
+          position: 'absolute',
+          left: '-50px',
+          bottom: '-20px',
+          width: '12rem',
+          height: '12rem',
+          opacity: 0.1,
+          pointerEvents: 'none',
           borderRadius: '50%',
           background: 'radial-gradient(circle, var(--clr-pink) 20%, transparent 60%)'
         }}
       />
-      <div className="absolute left-4 top-8 opacity-20 pointer-events-none hidden lg:block">
-        {/* Yellow Star decoration */}
-        <svg className="w-16 h-16 text-yellow-400" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 1.5l2.9 6.1 6.7 1-4.8 4.7 1.1 6.7-5.9-3.1-5.9 3.1 1.1-6.7-4.8-4.7 6.7-1z" />
-        </svg>
-      </div>
 
-      {/* Right side happy face flower decoration */}
-      <div className="absolute right-[-40px] top-[20%] opacity-15 pointer-events-none hidden lg:block">
-        <svg className="w-40 h-40 text-pink-400" fill="currentColor" viewBox="0 0 100 100">
-          <path d="M50 25c-5 0-10 5-10 10s5 10 10 10 10-5 10-10-5-10-10-10zm0 30c-5 0-10 5-10 10s5 10 10 10 10-5 10-10-5-10-10-10zm25-15c-5 0-10 5-10 10s5 10 10 10 10-5 10-10-5-10-10-10zm-50 0c-5 0-10 5-10 10s5 10 10 10 10-5 10-10-5-10-10-10z" />
-          <circle cx="50" cy="50" r="15" className="text-yellow-400" />
-        </svg>
-      </div>
-
-      <div className="section-container relative z-10">
+      <div className="section-container" style={{ position: 'relative', zIndex: 10 }}>
         
         {/* Title */}
-        <div className="text-center mb-10 reveal">
-          <h2 className="text-3xl md:text-4xl font-black mb-2 flex items-center justify-center gap-2 flex-wrap">
+        <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+          <h2 style={{ fontSize: '2.25rem', fontWeight: 900, marginBottom: '0.5rem', color: 'var(--clr-ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
             Our customers love it! 
-            <span className="flex items-center text-yellow-500 gap-1 bg-yellow-100 dark:bg-yellow-950 px-3 py-1 rounded-full border-2 border-slate-900 text-xl font-black">
+            <span 
+              style={{ 
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.25rem',
+                backgroundColor: 'var(--clr-yellow-light)',
+                padding: '0.25rem 0.75rem',
+                borderRadius: '9999px',
+                border: '2px solid var(--clr-border)',
+                fontSize: '1.25rem',
+                fontWeight: 900,
+                color: 'var(--clr-ink)'
+              }}
+            >
               ⭐ 4.7/5
             </span>
           </h2>
-          <p className="text-muted text-sm md:text-base font-semibold">
+          <p style={{ fontSize: '0.9375rem', color: 'var(--clr-muted)', fontWeight: 700 }}>
             100,000 reviews to help you choose
           </p>
         </div>
 
-        {/* Carousel Container */}
-        <div className="relative px-2 md:px-12">
+        {/* Carousel Outer Wrapper */}
+        <div className="reviews-carousel-container" style={{ position: 'relative' }}>
           
           {/* Navigation Arrows */}
           <button 
             onClick={handlePrev}
             aria-label="Previous review"
-            className="absolute left-0 top-[40%] translate-y-[-50%] w-10 h-10 rounded-full border-3 border-slate-900 bg-white flex items-center justify-center hover:scale-110 active:translate-y-[-46%] transition-all cursor-pointer z-20"
-            style={{ boxShadow: 'var(--shadow-brutal-sm)' }}
+            className="carousel-arrow-btn"
+            style={{
+              position: 'absolute',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              width: '2.75rem',
+              height: '2.75rem',
+              borderRadius: '50%',
+              border: '3px solid var(--clr-border)',
+              backgroundColor: '#ffffff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: 'var(--shadow-brutal-sm)',
+              cursor: 'pointer',
+              zIndex: 30,
+              transition: 'transform 0.1s ease'
+            }}
           >
-            <svg className="w-5 h-5 text-slate-800" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+            <svg style={{ width: '1.25rem', height: '1.25rem', color: 'var(--clr-ink)' }} fill="none" stroke="currentColor" strokeWidth="3.5" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
@@ -155,79 +176,121 @@ export function ReviewsSection() {
           <button 
             onClick={handleNext}
             aria-label="Next review"
-            className="absolute right-0 top-[40%] translate-y-[-50%] w-10 h-10 rounded-full border-3 border-slate-900 bg-white flex items-center justify-center hover:scale-110 active:translate-y-[-46%] transition-all cursor-pointer z-20"
-            style={{ boxShadow: 'var(--shadow-brutal-sm)' }}
+            className="carousel-arrow-btn"
+            style={{
+              position: 'absolute',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              width: '2.75rem',
+              height: '2.75rem',
+              borderRadius: '50%',
+              border: '3px solid var(--clr-border)',
+              backgroundColor: '#ffffff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: 'var(--shadow-brutal-sm)',
+              cursor: 'pointer',
+              zIndex: 30,
+              transition: 'transform 0.1s ease'
+            }}
           >
-            <svg className="w-5 h-5 text-slate-800" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+            <svg style={{ width: '1.25rem', height: '1.25rem', color: 'var(--clr-ink)' }} fill="none" stroke="currentColor" strokeWidth="3.5" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
             </svg>
           </button>
 
           {/* Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-hidden">
+          <div className="reviews-grid" style={{ display: 'grid', gap: '1.5rem' }}>
             
-            {/* Desktop View: shows 3 cards, Tablet shows 2, Mobile shows 1 */}
             {visibleReviews.map((review, index) => {
-              // Hide cards dynamically on smaller screen sizes
-              const cardClass = `playful-card p-6 flex flex-col justify-between min-h-[300px] relative reveal reveal-delay-${index + 1} ` + 
-                               (index === 1 ? 'hidden md:flex' : '') + 
-                               (index === 2 ? 'hidden lg:flex' : '')
+              // Set conditional display classes based on column slot index
+              let cardClass = "playful-card"
+              if (index === 1) cardClass += " review-card-tablet-desktop"
+              if (index === 2) cardClass += " review-card-desktop"
 
               return (
                 <div 
                   key={`${review.id}-${index}`}
                   className={cardClass}
-                  style={{ backgroundColor: 'var(--clr-white)', flex: '1 0 0%' }}
+                  style={{ 
+                    backgroundColor: 'var(--clr-white)',
+                    padding: '1.75rem',
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    justifyContent: 'space-between',
+                    minHeight: '18rem',
+                    position: 'relative',
+                    borderWidth: '3px',
+                  }}
                 >
                   {/* Quote decoration */}
-                  <span className="absolute top-4 left-6 text-6xl font-serif text-amber-500/10 pointer-events-none select-none">
+                  <span style={{ position: 'absolute', top: '0.25rem', left: '1.25rem', fontSize: '3.75rem', fontFamily: 'serif', color: 'rgba(217, 119, 6, 0.12)', userSelect: 'none', pointerEvents: 'none' }}>
                     “
                   </span>
 
                   {/* Verified Badge */}
-                  <div className="flex justify-end mb-2">
+                  <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '0.5rem' }}>
                     <span 
-                      className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider"
                       style={{ 
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.375rem',
+                        padding: '0.125rem 0.625rem',
+                        borderRadius: '9999px',
+                        fontSize: '0.625rem',
+                        fontWeight: 900,
+                        textTransform: 'uppercase',
                         backgroundColor: 'var(--clr-green-light)',
                         color: 'var(--clr-green)',
                         border: '1.5px solid var(--clr-border)'
                       }}
                     >
-                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                      <span style={{ width: '0.375rem', height: '0.375rem', borderRadius: '50%', backgroundColor: '#10b981' }}></span>
                       Verified
                     </span>
                   </div>
 
                   {/* Review Content */}
-                  <div className="mb-6 z-10 flex-grow">
-                    <h4 className="text-base font-black text-amber-600 mb-2 leading-snug">
+                  <div style={{ marginBottom: '1.5rem', zIndex: 10, flexGrow: 1 }}>
+                    <h4 style={{ fontSize: '1rem', fontWeight: 900, color: 'var(--clr-brand)', marginBottom: '0.5rem', lineHeight: '1.3' }}>
                       {review.venue}
                     </h4>
-                    <p className="text-slate-700 text-xs md:text-sm font-semibold leading-relaxed" style={{ color: 'var(--clr-ink)' }}>
+                    <p style={{ fontSize: '0.8125rem', fontWeight: 700, color: 'var(--clr-ink)', lineHeight: '1.5' }}>
                       {review.text}
                     </p>
                   </div>
 
-                  {/* Footer Divider */}
-                  <div className="border-t-2 border-dashed border-slate-200 dark:border-slate-800 my-4"></div>
+                  {/* Divider line */}
+                  <div style={{ borderTop: '2px dashed var(--clr-border-light)', margin: '0.75rem 0' }}></div>
 
-                  {/* Reviewer Details */}
-                  <div className="flex items-center gap-3">
+                  {/* Reviewer Info */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                     <div 
-                      className="w-10 h-10 rounded-full border-2 border-slate-900 flex items-center justify-center font-black text-slate-800 text-sm"
-                      style={{ backgroundColor: review.avatarColor }}
+                      style={{ 
+                        width: '2.5rem', 
+                        height: '2.5rem', 
+                        borderRadius: '50%', 
+                        border: '2px solid var(--clr-border)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontWeight: 900,
+                        fontSize: '0.875rem',
+                        color: 'var(--clr-ink)',
+                        backgroundColor: review.avatarColor
+                      }}
                     >
                       {review.avatarLetter}
                     </div>
                     
-                    <div className="flex-grow">
-                      <p className="text-xs md:text-sm font-black" style={{ color: 'var(--clr-ink)' }}>
+                    <div style={{ flexGrow: 1 }}>
+                      <p style={{ fontSize: '0.8125rem', fontWeight: 900, color: 'var(--clr-ink)' }}>
                         {review.author}
                       </p>
-                      <div className="flex items-center gap-2">
-                        <span className="text-[10px] text-muted font-bold">{review.timeAgo}</span>
-                        <div className="flex items-center gap-0.5 text-xs text-yellow-500 font-bold">
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <span style={{ fontSize: '0.6875rem', color: 'var(--clr-subtle)', fontWeight: 700 }}>{review.timeAgo}</span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.125rem', fontSize: '0.75rem', fontWeight: 800, color: '#eab308' }}>
                           <span>⭐</span>
                           <span>{review.rating}</span>
                         </div>
@@ -242,17 +305,23 @@ export function ReviewsSection() {
           </div>
 
           {/* Indicator Dots */}
-          <div className="flex justify-center gap-2 mt-8">
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginTop: '2rem' }}>
             {reviews.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setStartIndex(idx)}
                 aria-label={`Go to slide ${idx + 1}`}
-                className={`w-3 h-3 rounded-full border-2 border-slate-900 transition-all cursor-pointer ${
-                  startIndex === idx 
-                    ? 'bg-sky-500 scale-125' 
-                    : 'bg-white'
-                }`}
+                style={{
+                  width: '0.75rem',
+                  height: '0.75rem',
+                  borderRadius: '50%',
+                  border: '2px solid var(--clr-border)',
+                  backgroundColor: startIndex === idx ? 'var(--clr-sky)' : '#ffffff',
+                  cursor: 'pointer',
+                  padding: 0,
+                  transition: 'all 0.2s ease',
+                  transform: startIndex === idx ? 'scale(1.2)' : 'scale(1)'
+                }}
               />
             ))}
           </div>
@@ -260,6 +329,46 @@ export function ReviewsSection() {
         </div>
 
       </div>
+
+      <style>{`
+        .reviews-carousel-container {
+          padding: 0;
+        }
+        .carousel-arrow-btn:first-of-type {
+          left: 0.5rem;
+        }
+        .carousel-arrow-btn:last-of-type {
+          right: 0.5rem;
+        }
+        .reviews-grid {
+          grid-template-columns: 1fr;
+        }
+        .review-card-tablet-desktop {
+          display: none;
+        }
+        .review-card-desktop {
+          display: none;
+        }
+
+        @media (min-width: 768px) {
+          .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+          .review-card-tablet-desktop { display: flex !important; }
+        }
+
+        @media (min-width: 1024px) {
+          .reviews-carousel-container {
+            padding: 0 3.5rem;
+          }
+          .carousel-arrow-btn:first-of-type {
+            left: 0;
+          }
+          .carousel-arrow-btn:last-of-type {
+            right: 0;
+          }
+          .reviews-grid { grid-template-columns: repeat(3, 1fr); }
+          .review-card-desktop { display: flex !important; }
+        }
+      `}</style>
     </section>
   )
 }
