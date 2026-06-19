@@ -1,0 +1,47 @@
+Developer Note — AI & Robotics Summer Workshop Website
+========================================================
+To: Hiring Team
+From: Veer Pratap Singh
+Date: June 19, 2026
+
+Approach
+--------
+I built a full-stack landing page using React + Vite (TypeScript) on the frontend
+and Node.js (Express) on the backend, connected to a MongoDB Atlas cluster
+(InterestedUsers → Registered collection). The UI follows a neo-brutalist,
+kid-friendly design system with dark/light mode, scroll reveal animations,
+a custom RoboMaze mini-game, a Mystery Box popup with discount codes, a reviews
+carousel, and an enquiry/newsletter registration form that persists data to the
+database in real time. The backend includes a robust auto env-loader so it works
+regardless of how it is launched.
+
+Improvements Given More Time
+-----------------------------
+1. RAG (Retrieval-Augmented Generation) Chatbot — I would integrate a Gemini/
+   OpenAI-powered chatbot on the site backed by a vector store (e.g. Pinecone or
+   MongoDB Atlas Vector Search) trained on workshop FAQs, curriculum details, and
+   testimonials. Parents could ask questions in natural language and get accurate,
+   context-aware answers instantly — reducing drop-off at the registration stage.
+
+2. Authentication (Login / Signup) — I would add a proper auth layer using
+   JWT + bcrypt (or NextAuth / Firebase Auth) so parents can create accounts,
+   track their registration status, download receipts, and receive personalised
+   workshop updates. Role-based access (admin vs. parent) would also let the
+   team manage registrations from a secure dashboard.
+
+3. Admin Dashboard — A protected /admin route showing all Registered entries
+   and NewsletterSubscribers from MongoDB, with export-to-CSV and status
+   management (confirmed / waitlisted / cancelled).
+
+4. Payment Integration — Connect Razorpay or Stripe for online seat booking
+   with automated confirmation emails via Nodemailer / SendGrid.
+
+5. CI/CD Pipeline — Set up GitHub Actions to auto-deploy the frontend to
+   Vercel and the backend to Railway on every push to main, with environment
+   secrets managed securely.
+
+I thoroughly enjoyed building this and am confident these additions would make
+it a production-ready, scalable product. Happy to discuss any of this further.
+
+Regards,
+Veer Pratap Singh
